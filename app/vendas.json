@@ -1,0 +1,29 @@
+[
+  {
+    "filial": {
+      "codFilial":"1"
+    },
+    "mes":1,
+    "ano":2017,
+    "valor":100,
+    "margemLucro":0.10
+  },
+  {
+    "filial": {
+      "codFilial":"1"
+    },
+    "mes":2,
+    "ano":2017,
+    "valor":50,
+    "margemLucro":0.09
+  },
+  {
+    "filial": {
+      "codFilial":"2"
+    },
+    "mes":2,
+    "ano":2017,
+    "valor":50,
+    "margemLucro":0.09
+  }
+]

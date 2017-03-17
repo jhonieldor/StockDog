@@ -1,0 +1,79 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <span class="glyphicon glyphicon-eye-open"></span>
+    Watchlists
+    <!––[1] Invoke showModal() handler on click ––>
+    <button type="button"
+            class="btn btn-success btn-xs pull-right"
+            ng-click="showModal()">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+  </div>
+  <div class="panel-body">
+    <!–– [2] Show help text if no watchlists exist ––>
+    <div ng-if="!watchlists.length" class="text-center">
+      Use <span class="glyphicon glyphicon-plus"></span> to create a list
+    </div>
+    <div class="list-group">
+      <!–– [3] Repeat over each list in watchlists and create link ––>
+      <a class="list-group-item"
+         ng-class="{ active: currentList == list.id }"
+         ng-repeat="list in watchlists track by $index"
+         ng-click="gotoList(list.id)">
+        {{list.name}}
+        <!–– [4] Delete this list by invoking deleteList() handler ––>
+        <button type="button" class="close"
+                ng-click="deleteList(list)"> &times;
+        </button>
+      </a>
+    </div>
+  </div>
+
+
+</div>
+
+<!--<div class="panel panel-info" ng-controller="DashboardCtrl">-->
+  <!--<div class="panel-heading">-->
+    <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+    <!--Filtros-->
+    <!--<!––[1] Invoke showModal() handler on click ––>-->
+  <!--</div>-->
+  <!--<div class="panel-body">-->
+    <!--<div>-->
+      <!--Selecione os filtros:-->
+      <!--{{secondaryWatchlists}}-->
+      <!--<br/>-->
+    <!--</div>-->
+    <!--<!–– [2] Show help text if no watchlists exist ––>-->
+    <!--<div ng-if="!watchlists.length" class="text-center">-->
+      <!--Use <span class="glyphicon glyphicon-plus"></span> to create a list-->
+
+      <!--{{teste}}-->
+    <!--</div>-->
+    <!--<div class="list-group" ng-show="false">-->
+      <!--<!–– [3] Repeat over each list in watchlists and create link ––>-->
+      <!--<div class="checkbox" ng-repeat="list in watchlists track by $index">-->
+      <!--<label><input type="checkbox" ng-model="list.filtered" ng-checked="">{{list.name}}</label>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;<a class="list-group-item"&ndash;&gt;-->
+         <!--&lt;!&ndash;ng-repeat="list in watchlists track by $index"&ndash;&gt;-->
+         <!--&lt;!&ndash;ng-click="adicionarFiltro(list.name,watchlists)">&ndash;&gt;-->
+        <!--&lt;!&ndash;{{list.name}}&ndash;&gt;-->
+        <!--&lt;!&ndash;<!–– [4] Delete this list by invoking deleteList() handler ––>&ndash;&gt;-->
+      <!--&lt;!&ndash;</a>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div>-->
+      <!--<button type="button" class="btn btn-primary" ng-click="aplicarFiltros()" data-toggle="button"-->
+              <!--aria-pressed="false"-->
+              <!--autocomplete="off">-->
+        <!--Filtrar-->
+      <!--</button>-->
+      <!--<button type="button" class="btn btn-secondary" ng-click="limparFiltros()" data-toggle="button"-->
+              <!--aria-pressed="false"-->
+              <!--autocomplete="off">-->
+        <!--Limpar Filtros-->
+      <!--</button>-->
+    <!--</div>-->
+
+  <!--</div>-->
+<!--</div>-->

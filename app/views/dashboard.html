@@ -1,0 +1,210 @@
+<div class="row">
+  <!–– Left Column ––>
+  <div class="col-md-3">
+    <stk-watchlist-panel></stk-watchlist-panel>
+  </div>
+  <!–– Right Column ––>
+  <div class="col-md-9">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-globe"></span>
+        Portfolio Overview
+      </div>
+      <div class="panel-body">
+        <!–– [1] Display some helpful text to guide new users ––>
+        <div ng-hide="watchlists.length && watchlists[0].stocks.length"
+             class="jumbotron">
+          <h1>Unleash the hounds!</h1>
+
+          <p>
+            StockDog, your personal investment watchdog, is ready
+            to be set loose on the financial markets!
+          </p>
+
+          <p>Create a watchlist and add some stocks to begin monitoring.</p>
+        </div>
+        <div ng-show="watchlists.length && watchlists[0].stocks.length">
+          <!–– Top Row ––>
+          <div class="row">
+            <div class="panel panel-primary">
+              <!-- Default panel contents -->
+              <div class="panel-heading" ng-show="secondaryWatchlists.length">Filtros aplicados</div>
+              <div class="panel-body" >
+                <div class="btn-group btn-group">
+                  <button type="button" class="btn btn-default" ng-repeat="list in secondaryWatchlists| filter: { filtered: 'true' }">{{list.name}}</button>
+                </div>
+                <!--n-->
+                <!--<p>...</p>-->
+              </div>
+
+            </div>
+          </div>
+
+          <div ng-show="false" class="row">
+            <!–– Left Column ––>
+            <div class="col-md-6">
+              <!–– [2] Use sign-fade directive on wrapper element ––>
+              <div stk-sign-fade="{{marketValue}}" class="well">
+                <h2>{{marketValue | currency}}</h2>
+                <h5>Total Market Value</h5>
+              </div>
+            </div>
+            <!–– Right Column ––>
+            <div ng-show="false" class="col-md-6">
+              <!–– [3] Use sign-color directive on wrapper element ––>
+              <div class="well" stk-sign-color="{{dayChange}}">
+                <h2>{{dayChange | currency}}</h2>
+                <h5>Total Day Change</h5>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <!--<div class="chip">-->
+            <!--&lt;!&ndash;<img src="img_avatar.jpg" alt="Person" width="96" height="96">&ndash;&gt;-->
+            <!--John Doe-->
+            <!--<span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>-->
+            <!--</div>-->
+            <!–– Left Column ––>
+            <div class="col-md-12">
+              <div class="col-md-3">
+                <div class="panel panel-info" style="height: 365px;">
+                  <div class="panel-heading">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    Filtros
+                    <!––[1] Invoke showModal() handler on click ––>
+                  </div>
+                  <div class="panel-body">
+                    <div>
+                      Selecione:
+                      <!--{{secondaryWatchlists}}-->
+                      <br/>
+                    </div>
+                    <!–– [2] Show help text if no watchlists exist ––>
+                    <div ng-if="!watchlists.length" class="text-center">
+                      Use <span class="glyphicon glyphicon-plus"></span> to create a list
+
+                      {{teste}}
+                    </div>
+                    <div class="list-group" style="height: 220px;">
+                      <!–– [3] Repeat over each list in watchlists and create link ––>
+                      <!--<div class="checkbox" ng-repeat="list in watchlists track by $index">-->
+                      <!--<label><input type="checkbox" ng-model="list.filtered" ng-checked="">{{list.name}}</label>-->
+                      <!--</div>-->
+
+                      <a class="list-group-item"
+                         ng-class="{ active: currentList == list.id }"
+                         ng-repeat="list in watchlists track by $index">
+                        {{list.name}}
+                        <!–– [4] Delete this list by invoking deleteList() handler ––>
+                        <button ng-if="list.filtered" type="button" ng-click="retirarFiltro(list)"
+                                class="btn btn-primary" style="float: right; font-size: 10px;  padding-left: 10px;">
+                          <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+
+                        <button ng-if="!list.filtered" type="button" ng-click="adicionarFiltro(list)"
+                                class="btn btn-default" style="height: 28px;
+                         width:34px; float: right; font-size: 10px;  padding-left: 10px;">
+                          <!--<span class="glyphicon glyphicon-bookmark"></span>-->
+                        </button>
+                        <!--<button type="button" class="close"-->
+                        <!--ng-click="deleteList(list)"> &times;-->
+                        <!--</button>-->
+
+                      </a>
+
+                    </div>
+                    <div>
+                      <!--<button type="button" class="btn btn-primary" ng-click="aplicarFiltros()" data-toggle="button"-->
+                      <!--aria-pressed="false"-->
+                      <!--autocomplete="off">-->
+                      <!--Filtrar-->
+                      <!--</button>-->
+                      <!--<button type="button" class="btn btn-secondary" ng-click="limparFiltros()" data-toggle="button"-->
+                      <!--aria-pressed="false"-->
+                      <!--autocomplete="off">-->
+                      <!--Limpar-->
+                      <!--</button>-->
+                      <div class="btn-group btn-group" style="bottom: 0%;">
+                        <button type="button" class="btn btn-primary" ng-click="aplicarFiltros()"><span
+                          class="glyphicon glyphicon-filter"></span></button>
+                        <button type="button" class="btn btn-default" ng-click="limparFiltros()"><span
+                          class="glyphicon glyphicon-refresh"></span></button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-info" style="height: 365px;">
+                  <div class="panel-body">
+                    <div google-chart agc-on-select="testDonutChart(selectedItem)" chart="donutChart"
+                         style="{{cssStyle}}"></div>
+                    <div class="btn-group btn-group">
+                      <button type="button" class="btn btn-primary">Button 1</button>
+                      <button type="button" class="btn btn-default">Button 2</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!–– Right Column ––>
+              <div class="col-md-5">
+                <div class="panel panel-info" style="height: 365px;">
+                  <div class="panel-body">
+                    <div google-chart chart="columnChart" agc-on-select="testColumnChart(selectedItem)"
+                         style="{{cssStyle}}">
+
+                    </div>
+                    <!--<center>-->
+                    <div class="btn-group btn-group" ng-if="activeFilterColumns">
+                      <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>
+                      </button>
+                      <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove "></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!--</center>-->
+              </div>
+
+            </div>
+
+          </div>
+          <div class="panel-body">
+            <!–– [2] Show help text if no watchlists exist ––>
+            <!--{{secondaryWatchlists}}-->
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <div class="list-group">
+                  <a href="#item-1" class="list-group-item" ng-repeat="list in secondaryWatchlists track by $index"
+                     data-toggle="collapse">
+                    {{list.name}}
+
+                    <ul class="list-group" id="item-1">
+                      <li class="list-group-item" ng-repeat="stock in list.stocks track by $index">
+                        {{stock.company.symbol}} -
+                        Day Change : {{stock.dayChange | currency}}
+                      </li>
+                    </ul>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div google-chart chart="columnChartByWatchlist"
+                     style="{{cssStyle}}"></div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
