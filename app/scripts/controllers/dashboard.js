@@ -19,13 +19,15 @@ angular.module('stockDogApp')
       watchlist.filtered = true;
       $scope.secondaryWatchlists.push(watchlist);
     });
+
+
     $scope.activeFilterColumns = false;
     $scope.activeFilterDonuts = false;
-
+    //$scope.watchlistViewExpanded = true;
 
     $scope.watchListSelected = $scope.secondaryWatchlists[0];
-
-
+    $scope.columnNamesToFilter = [];
+    $scope.donutsNamesToFilter = [];
 
 
     $scope.teste = 0;
@@ -59,6 +61,136 @@ angular.module('stockDogApp')
       $scope.activeFilterColumns = true;
     };
 
+
+    $scope.activateColumnChartFilter = function (selectedItem) {
+      if ($scope.activeFilterColumns === false) {
+        $scope.activeFilterColumns = true;
+      }
+      var watchListName = $scope.columnChart.data[selectedItem.column, selectedItem.row + 1][0];
+      if ($filter('filter')($scope.columnNamesToFilter, 'watchListname').length === 0) {
+        $scope.columnNamesToFilter.push(watchListName);
+      }
+
+    }
+
+    $scope.cancelColumnChartFilter = function () {
+      $scope.activeFilterColumns = false;
+      $scope.columnNamesToFilter = [];
+      $scope.donutsNamesToFilter = [];
+      $scope.secondaryWatchlists = $scope.watchlists;
+      updateCharts();
+    }
+
+
+    $scope.activateDonutChartFilter = function (selectedItem) {
+      console.log(selectedItem);
+      if ($scope.activeFilterDonuts === false) {
+        $scope.activeFilterDonuts = true;
+      }
+      var watchListName = $scope.donutChart.data[selectedItem.row, selectedItem.row + 1][0];
+      if ($filter('filter')($scope.donutsNamesToFilter, 'watchListname').length === 0) {
+        $scope.donutsNamesToFilter.push(watchListName);
+      }
+
+    }
+
+    $scope.cancelDonutsChartFilter = function () {
+      $scope.activeFilterDonuts = false;
+      $scope.columnNamesToFilter = [];
+      $scope.donutsNamesToFilter = [];
+      $scope.secondaryWatchlists = $scope.watchlists;
+      updateCharts();
+    }
+
+    $scope.filtrarColunas = function () {
+
+      $scope.secondaryWatchlists.forEach(function (watchlist) {
+        watchlist.filtered = false;
+      });
+
+      $scope.columnNamesToFilter.forEach(function (name) {
+        $filter('filter')($scope.secondaryWatchlists, {'name': name})[0].filtered = true;
+      })
+
+      $scope.columnNamesToFilter = [];
+      $scope.donutsNamesToFilter = [];
+      updateCharts();
+      $scope.activeFilterColumns = false;
+    }
+
+    $scope.viewWatchlist = function (name) {
+
+      var chartByWatchlist = {
+        type: 'ColumnChart',
+        displayed: true,
+        width: '100%',
+        height: '500px',
+        data: [['Watchlist', 'Change', {role: 'style'}]],
+        options: {
+          title: 'Day Change by Company',
+          legend: 'none',
+          animation: {
+            duration: 1000,
+            easing: 'linear'
+          }
+        },
+        formatters: formatters
+      };
+
+      $scope.watchListSelected = $filter('filter')($scope.secondaryWatchlists, {'name': name})[0];
+      console.log(name);
+      console.log($scope.watchListSelected);
+      _.each($scope.watchListSelected.stocks, function (stock) {
+        chartByWatchlist.data.push([stock.company.symbol, stock.dayChange,
+          stock.dayChange < 0 ? 'Red' : 'Green']);
+      });
+
+      $scope.chartByWatchlist = chartByWatchlist;
+      $scope.cssStyle2 = 'height:300px;';
+
+    }
+
+    $scope.mudarGrafico = function (type) {
+      $scope.chartByWatchlist.type = type;
+    }
+
+    $scope.changeSytle = function () {
+      var altura = 'height:' + $scope.chartByWatchlist.height;
+      var largura = 'width:' + $scope.chartByWatchlist.width;
+      $scope.cssStyle2 = altura + ';' + largura;
+    }
+
+
+    $scope.expandWatchlistView = function () {
+      if (!$scope.watchlistViewExpanded) {
+        $scope.watchlistViewExpanded = true;
+      } else {
+        $scope.watchlistViewExpanded = false;
+      }
+
+    }
+
+    //$scope.hideWatchlistView= function(){
+    //  $scope.watchlistViewExpanded = false;
+    //}
+
+    $scope.filtrarDonuts = function () {
+
+      $scope.secondaryWatchlists.forEach(function (watchlist) {
+        watchlist.filtered = false;
+      });
+
+      $scope.donutsNamesToFilter.forEach(function (name) {
+        $filter('filter')($scope.secondaryWatchlists, {'name': name})[0].filtered = true;
+      })
+
+      $scope.columnNamesToFilter = [];
+      $scope.donutsNamesToFilter = [];
+      updateCharts();
+      $scope.activeFilterDonuts = false;
+    }
+
+
     $scope.filtrar = function (name) {
       $scope.watchListSelected = null;
       $scope.secondaryWatchlists = $filter('filter')($scope.watchlists, {'name': name});
@@ -77,19 +209,19 @@ angular.module('stockDogApp')
       updateCharts();
     }
 
-    $scope.adicionarFiltro = function(watchlist){
+    $scope.adicionarFiltro = function (watchlist) {
       $scope.watchlist = $filter('filter')($scope.watchlists, {'name': watchlist.name})[0];
       $scope.watchlist.filtered = true;
     }
 
-    $scope.retirarFiltro = function(watchlist){
+    $scope.retirarFiltro = function (watchlist) {
       $scope.watchlist = $filter('filter')($scope.watchlists, {'name': watchlist.name})[0];
       $scope.watchlist.filtered = false;
     }
 
     $scope.updateFilters = function () {
       $scope.watchlists.forEach(function (watchlist) {
-        watchlist =  $filter('filter')($scope.secondaryWatchlists, {'name': watchlist.name});
+        watchlist = $filter('filter')($scope.secondaryWatchlists, {'name': watchlist.name});
         watchlist.filtered = true;
       });
     }
@@ -120,9 +252,12 @@ angular.module('stockDogApp')
       var donutChart = {
         type: 'PieChart',
         displayed: true,
+        width: '100%',
+        height: '300px',
         data: [['Watchlist', 'Market Value']],
         options: {
           title: 'Market Value by Watchlist',
+          //isStacked: 'true',
           legend: 'none',
           pieHole: 0.4
         },
@@ -161,9 +296,11 @@ angular.module('stockDogApp')
       };
       // [3] Push data onto both chart objects
       _.each($scope.secondaryWatchlists, function (watchlist) {
-        donutChart.data.push([watchlist.name, watchlist.marketValue]);
-        columnChart.data.push([watchlist.name, watchlist.dayChange,
-          watchlist.dayChange < 0 ? 'Red' : 'Green']);
+        if (watchlist.filtered) {
+          donutChart.data.push([watchlist.name, watchlist.marketValue]);
+          columnChart.data.push([watchlist.name, watchlist.dayChange,
+            watchlist.dayChange < 0 ? 'Red' : 'Green']);
+        }
       });
 
       if ($scope.watchListSelected != null) {
