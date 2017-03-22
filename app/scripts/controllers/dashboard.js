@@ -120,19 +120,28 @@ angular.module('stockDogApp')
 
     $scope.viewWatchlist = function (name) {
 
+      var chartHeight = 300;
+
+      if($scope.chartByWatchlist!=null)
+        chartHeight = $scope.chartByWatchlist.height;
+
       var chartByWatchlist = {
         type: 'ColumnChart',
         displayed: true,
-        width: '100%',
-        height: '500px',
+        //width: '100%',
+        //height: chartHeight,
         data: [['Watchlist', 'Change', {role: 'style'}]],
         options: {
           title: 'Day Change by Company',
           legend: 'none',
           animation: {
-            duration: 1000,
+            duration: 500,
             easing: 'linear'
-          }
+          },
+          height: 300,
+          width: 300,
+          colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+          is3D: true
         },
         formatters: formatters
       };
@@ -141,12 +150,11 @@ angular.module('stockDogApp')
       console.log(name);
       console.log($scope.watchListSelected);
       _.each($scope.watchListSelected.stocks, function (stock) {
-        chartByWatchlist.data.push([stock.company.symbol, stock.dayChange,
-          stock.dayChange < 0 ? 'Red' : 'Green']);
+        chartByWatchlist.data.push([stock.company.symbol, stock.dayChange, stock.dayChange < 0 ? 'Red' : 'Green']);
       });
 
       $scope.chartByWatchlist = chartByWatchlist;
-      $scope.cssStyle2 = 'height:300px;';
+      $scope.cssStyle2 = 'height:'+$scope.chartByWatchlist.options.height+'px;';
 
     }
 
@@ -155,9 +163,9 @@ angular.module('stockDogApp')
     }
 
     $scope.changeSytle = function () {
-      var altura = 'height:' + $scope.chartByWatchlist.height;
-      var largura = 'width:' + $scope.chartByWatchlist.width;
-      $scope.cssStyle2 = altura + ';' + largura;
+      var altura = 'height:' +$scope.chartByWatchlist.options.height+ 'px;';
+      $scope.cssStyle2 = altura;
+
     }
 
 
@@ -252,14 +260,14 @@ angular.module('stockDogApp')
       var donutChart = {
         type: 'PieChart',
         displayed: true,
-        width: '100%',
-        height: '300px',
         data: [['Watchlist', 'Market Value']],
         options: {
+
           title: 'Market Value by Watchlist',
           //isStacked: 'true',
           legend: 'none',
           pieHole: 0.4
+          //is3D: true
         },
         formatters: formatters
       };

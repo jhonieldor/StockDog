@@ -1,10 +1,20 @@
 [
-  {
-    "codFilial":"1",
-    "nome":"Filial 1"
-  },
-  {
-    "codFilial":"2",
-    "nome" : "Filial 2"
-  }
+	{
+		"CODFILIAL" : 1,
+		"NOMFILIAL" : "COMERCIAL DE CALÇADOS ENI LTDA",
+		"UF" : "PR",
+		"CODCIDADE" : 1,
+		"ENDERECO" : "RUA SAO PAULO",
+		"BAIRRO" : "CENTRO",
+		"CEP" : "85.960-000"
+	},
+	{
+		"CODFILIAL" : 2,
+		"NOMFILIAL" : "COMERCIAL DE CALCADOS GREMARI LTDA",
+		"UF" : "PR",
+		"CODCIDADE" : 1,
+		"ENDERECO" : "AV. RIO GRANDE DO SUL",
+		"BAIRRO" : "CENTRO",
+		"CEP" : "85.960-000"
+	}
 ]

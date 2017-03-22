@@ -40,6 +40,12 @@ body {
   color: #000;
 }
 
+#chart_div {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 400px;
+  height: 700px;
+}
 
 /* Stock Table Styles */
 .table {

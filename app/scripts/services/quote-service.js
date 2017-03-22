@@ -62,7 +62,7 @@ angular.module('stockDogApp')
     };
 
     // [4] Used to fetch new quote data every 5 seconds
-    //$interval(this.fetch, 5000);
+    $interval(this.fetch, 5000);
 
     // AngularJS will instantiate a singleton by calling "new" on this function
   });

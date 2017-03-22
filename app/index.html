@@ -35,6 +35,11 @@
               <li ng-class="{active: activeView === 'dashboard'}">
                 <a href="/">Dashboard</a>
               </li>
+
+              <li ng-class="{active: activeView === 'ultradashboard'}">
+                <a href="/#/ultradashboard">Ultra Dashboard</a>
+              </li>
+
               <li ng-class="{active: activeView === 'watchlist'}"
                   class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
@@ -98,8 +103,10 @@
       <script src="scripts/directives/stk-sign-color.js"></script>
       <script src="scripts/directives/stk-sign-fade.js"></script>
       <script src="scripts/controllers/dashboardvendas.js"></script>
-      <script src="scripts/services/vendas.js"></script>
-      <script src="scripts/services/filiais.js"></script>
+      <script src="scripts/services/vendas-service.js"></script>
+      <script src="scripts/services/filiais-service.js"></script>
+      <script src="scripts/services/clientes-service.js"></script>
+      <script src="scripts/controllers/ultradashboard.js"></script>
       <!-- endbuild -->
   </body>
 </html>

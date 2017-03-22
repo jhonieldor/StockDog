@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-4">
+    <!--<div class="col-md-6">-->
+    <div class="panel panel-info">
+      <div class="panel-heading">Totais de Vendas dos Clientes</div>
+
+      <div class="panel-body">
+        <div id="chart_div" google-chart chart="barClienteChart" style="top: 0%"></div>
+      </div>
+    </div>
+    <!--</div>-->
+  </div>
+  <div class="col-md-8">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-globe"></span>
+        Dashboard Ultra
+      </div>
+      <div class="panel-body">
+        <!--{{vendas}}-->
+        <!--{{filiais}}-->
+        <!--{{clientes}}-->
+        <!--<div google-chart chart="barClienteChart" style="{{cssStyle}}"></div>-->
+        <div class="row">
+          <div class="col-md-5">
+            <div class="panel panel-info">
+              <!--<div class="panel-heading">Totais de Vendas por Filial</div>-->
+
+              <div class="panel-body">
+                <div google-chart chart="pieChartVendasFiliais"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="panel panel-info">
+              <!--<div class="panel-heading">Margem Bruta</div>-->
+
+              <div class="panel-body">
+                <div google-chart chart="columnsMargemBrutaAnual"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <div class="panel panel-info">
+              <!--<div class="panel-heading">Totais de Vendas por Filial</div>-->
+
+              <div class="panel-body">
+                <div google-chart chart="columnsVendasAno"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <!--<div class="panel-heading">Margem Bruta</div>-->
+            <div class="panel panel-info">
+
+              <div class="panel-body">
+                <div google-chart chart="columnsVendasMes"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

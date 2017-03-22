@@ -60,16 +60,29 @@
                             <div class="form-group">
                               <div class="btn-group">
                                 <label for="stock-shares">Tipos de gráfico</label>
-                                <button style="width: 120px" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                <button style="width: 120px" type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                   Selecione <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" style="width: 200px">
-                                  <li><a ng-click="mudarGrafico('ColumnChart')">Barras</a></li>
+                                  <li><a ng-click="mudarGrafico('ColumnChart')">Colunas</a></li>
                                   <li role="separator" class="divider"></li>
                                   <li><a ng-click="mudarGrafico('LineChart')">Linhas</a></li>
                                   <li role="separator" class="divider"></li>
                                   <li><a ng-click="mudarGrafico('PieChart')">Pizza</a></li>
+                                  <li role="separator" class="divider"></li>
+                                  <li><a ng-click="mudarGrafico('BarChart')">Barras</a></li>
+                                  <li role="separator" class="divider"></li>
+                                  <li><a ng-click="mudarGrafico('ScatterChart')">Dispersão</a></li>
+                                  <li role="separator" class="divider"></li>
+                                  <li><a ng-click="mudarGrafico('Histogram')">Histograma</a></li>
+                                  <li role="separator" class="divider"></li>
+                                  <li><a ng-click="mudarGrafico('AreaChart')">Area</a></li>
+                                  <li role="separator" class="divider"></li>
+                                  <li><a ng-click="mudarGrafico('Table')">Tabela</a></li>
+                                  <li role="separator" class="divider"></li>
+                                  <li><a ng-click="mudarGrafico('CandlestickChart')">Candlestick Chart</a></li>
                                 </ul>
 
                               </div>
@@ -81,8 +94,7 @@
                               <input type="number"
                                      class="form-control"
                                      id="stock-shares"
-                                     placeholder="(%)"
-                                     ng-model="chartByWatchlist.width"
+                                     ng-model="chartByWatchlist.options.width"
                                      required style="width: 100px">
                             </div>
                           </div>
@@ -93,33 +105,15 @@
                               <input type="number"
                                      class="form-control"
                                      id="stock-shares2"
-                                     placeholder="pixels"
-                                     ng-model="chartByWatchlist.height"
+                                     ng-model="chartByWatchlist.options.height"
+                                     ng-change="changeSytle()"
                                      required style="width: 100px">
                             </div>
                           </div>
-                          <div class="col-md-2">
-                            <label for="stock-shares">Confirmar</label>
-                            <button type="button" class="btn btn-success" ng-click="changeSytle()"><span
-                              class="glyphicon glyphicon-ok"></span>
-                            </button>
-                          </div>
-
-                          <!--<div class="col-md-3">-->
-                          <!--<div class="form-group">-->
-                          <!--<input type="number"-->
-                          <!--class="form-control"-->
-                          <!--id="stock-shares2"-->
-                          <!--placeholder="# Shares Owned"-->
-                          <!--ng-model="newStock.shares"-->
-                          <!--required style="width: 200px">-->
-                          <!--</div>-->
-                          <!--</div>-->
-
-
                         </div>
+                        <!---->
 
-                        <div google-chart chart="chartByWatchlist" style="{{cssStyle2}}"></div>
+
                       </div>
                     </div>
                   </div>
@@ -223,6 +217,7 @@
               <div class="panel panel-info" style="height: 385px;">
                 <div class="panel-body">
                   <div class="row">
+                    <!---->
                     <div google-chart agc-on-select="activateDonutChartFilter(selectedItem)" chart="donutChart"
                          style="{{cssStyle}}"></div>
                     <!--<span ng-repeat="label in donutsNamesToFilter" class="label label-default center">{{label}} </span>-->

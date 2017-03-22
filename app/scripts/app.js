@@ -25,6 +25,10 @@ angular
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardCtrl'
       })
+      .when('/ultradashboard', {
+        templateUrl: 'views/ultradashboard.html',
+        controller: 'UltradashboardCtrl'
+      })
       .when('/watchlist/:listId', {
         templateUrl: 'views/watchlist.html',
         controller: 'WatchlistCtrl'
