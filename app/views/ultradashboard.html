@@ -10,6 +10,7 @@
     </div>
     <!--</div>-->
   </div>
+
   <div class="col-md-8">
     <div class="panel panel-info">
       <div class="panel-heading">
@@ -23,21 +24,80 @@
         <!--<div google-chart chart="barClienteChart" style="{{cssStyle}}"></div>-->
         <div class="row">
           <div class="col-md-5">
-            <div class="panel panel-info">
+            <div class="panel panel-info" style="height: 385px;">
               <!--<div class="panel-heading">Totais de Vendas por Filial</div>-->
 
               <div class="panel-body">
-                <div google-chart chart="pieChartVendasFiliais"></div>
+                <div class="row">
+                  <div google-chart chart="pieChartVendasFiliais" agc-on-select="addFilialToFilter(selectedItem)"></div>
+                </div>
+                <div class="btn-group btn-group" ng-if="activeFilialToFilter">
+                  <!--<div class="row">-->
+                  <div style="height: 25px">
+                    <ul class="nav nav-pills" role="tablist">
+                      <li role="presentation" ng-repeat="filial in filiaisToFilter" class="active">
+                        <span class="label label-default center">Filial {{filial}} </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <button type="button" class="btn btn-success" ng-click="filtrarFiliais()"><span
+                      class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="cancelFiliaisFilter()"><span
+                      class="glyphicon glyphicon-remove "></span>
+                    </button>
+                  </div>
+                </div>
+                <div style="height: 25px">
+                </div>
+                <div ng-if="!activeFilialToFilter" style="float: right; bottom: 0%">
+                  <button type="button" ng-click="limparFiltros()" class="btn btn-default"><span
+                    class="glyphicon glyphicon-refresh"></span>
+                  </button>
+                </div>
+
+
               </div>
             </div>
           </div>
 
           <div class="col-md-6">
-            <div class="panel panel-info">
+            <div class="panel panel-info" style="height: 385px;">
               <!--<div class="panel-heading">Margem Bruta</div>-->
 
               <div class="panel-body">
-                <div google-chart chart="columnsMargemBrutaAnual"></div>
+                <div class="row">
+                  <div google-chart chart="columnsMargemBrutaAnual"
+                       agc-on-select="addMBAnoToFilter(selectedItem)"></div>
+                </div>
+                <div class="btn-group btn-group" ng-if="activeMBPeriodoAnualToFilter">
+                  <!--<div class="row">-->
+                  <div style="height: 25px">
+                    <ul class="nav nav-pills" role="tablist">
+                      <li role="presentation" ng-repeat="mb in mbPeriodosAnuaisToFilter" class="active">
+                        <span class="label label-default center"> {{mb}} </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <button type="button" class="btn btn-success" ng-click="filtrarMBPeriodoAnuais()"><span
+                      class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="cancelMbPeriodosAnuaisFilter()"><span
+                      class="glyphicon glyphicon-remove "></span>
+                    </button>
+                  </div>
+                </div>
+                <div style="height: 25px">
+                </div>
+                <div ng-if="!activeMBPeriodoAnualToFilter" style="float: right; bottom: 0%">
+                  <button type="button" ng-click="limparFiltros()" class="btn btn-default"><span
+                    class="glyphicon glyphicon-refresh"></span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -45,24 +105,102 @@
 
         <div class="row">
           <div class="col-md-5">
-            <div class="panel panel-info">
+            <div class="panel panel-info" style="height: 385px;">
               <!--<div class="panel-heading">Totais de Vendas por Filial</div>-->
 
               <div class="panel-body">
-                <div google-chart chart="columnsVendasAno"></div>
+                <div class="row">
+                  <div google-chart chart="columnsVendasAno" agc-on-select="addVendasAnoToFilter(selectedItem)"></div>
+                </div>
+
+                <div class="btn-group btn-group" ng-if="activeVendasPeriodoAnualToFilter">
+                  <!--<div class="row">-->
+                  <div style="height: 25px">
+                    <ul class="nav nav-pills" role="tablist">
+                      <li role="presentation" ng-repeat="ano in vendasPeriodosAnuaisToFilter" class="active">
+                        <span class="label label-default center">{{ano}} </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <button type="button" class="btn btn-success" ng-click="filtrarVendasPeriodoAnuais()"><span
+                      class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="cancelVendasPeriodosAnuaisFilter()"><span
+                      class="glyphicon glyphicon-remove "></span>
+                    </button>
+                  </div>
+                </div>
+                <div style="height: 25px">
+                </div>
+                <div ng-if="!activeVendasPeriodoAnualToFilter" style="float: right; bottom: 0%">
+                  <button type="button" ng-click="limparFiltros()" class="btn btn-default"><span
+                    class="glyphicon glyphicon-refresh"></span>
+                  </button>
+                </div>
+
+
               </div>
             </div>
           </div>
 
           <div class="col-md-6">
             <!--<div class="panel-heading">Margem Bruta</div>-->
-            <div class="panel panel-info">
+            <div class="panel panel-info" style="height: 385px;">
 
               <div class="panel-body">
-                <div google-chart chart="columnsVendasMes"></div>
+                <div class="row">
+                  <div google-chart chart="columnsVendasMes" agc-on-select="activateDonutChartFilter(selectedItem)"></div>
+                </div>
+
+                <div class="btn-group btn-group" ng-if="activePeriodoMensalToFilter">
+                  <!--<div class="row">-->
+                  <div style="height: 25px">
+                    <ul class="nav nav-pills" role="tablist">
+                      <li role="presentation" ng-repeat="ano in vendasPeriodosAnuaisToFilter" class="active">
+                        <span class="label label-default center">{{ano}} </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <button type="button" class="btn btn-success" ng-click="filtrarVendasPeriodoAnuais()"><span
+                      class="glyphicon glyphicon-ok"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" ng-click="cancelVendasPeriodosAnuaisFilter()"><span
+                      class="glyphicon glyphicon-remove "></span>
+                    </button>
+                  </div>
+                </div>
+                <div style="height: 25px">
+                </div>
+                <div ng-if="!activePeriodoMensalToFilter" style="float: right; bottom: 0%">
+                  <button type="button" ng-click="limparFiltros()" class="btn btn-default"><span
+                    class="glyphicon glyphicon-refresh"></span>
+                  </button>
+                </div>
+
               </div>
+
+
+            </div>
+            <div class="row">
+              <div class="panel panel-info">
+                <div class="panel-heading"> Teste
+                </div>
+                <div class="panel-body">
+                  <!--//graficoTeste-->
+                    <!--<h1>Gráfico aqui</h1>-->
+                  <div google-chart chart="graficoTeste"></div>
+                </div>
+
+              </div>
+
             </div>
           </div>
+
+
         </div>
 
 
